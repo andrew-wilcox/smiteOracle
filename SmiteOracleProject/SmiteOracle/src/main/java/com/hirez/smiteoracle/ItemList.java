@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,13 +23,29 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-public class ItemList extends Activity {
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
+public class ItemList extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_list);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiver, new IntentFilter("com.hirez.smiteoracle.ItemList"));
+    }
+
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -35,6 +53,14 @@ public class ItemList extends Activity {
             if (bundle != null) {
                 String jsonString = bundle.getString("response");
                 String methodName = bundle.getString("methodName");
+                JSONObject response = string2JSON(jsonString);
+
+                try{
+                    Method m = ItemList.class.getDeclaredMethod("handle" + methodName, JSONObject.class);
+                    m.invoke(this, new Object[] { response });
+                } catch(Exception e){
+                    Log.d("Tag", e.getCause().toString());
+                }
             };
         }
     };
@@ -75,6 +101,14 @@ public class ItemList extends Activity {
         }
     }
 
+    //*************
+    //API FUNCTIONS
+    //*************
+    public void handlecreatesession(JSONObject response)
+    {
+        Log.v("Handling", "Create Session");
+    }
+
     //****************
     //HELPER FUNCTIONS
     //****************
@@ -92,8 +126,10 @@ public class ItemList extends Activity {
 
     public void CreateSession(View v)
     {
+        String[] l = {};
         Intent i = new Intent(this, SmiteAPIHandler.class);
         i.putExtra("methodName", "createsession");
+        i.putExtra("data", l);
         startService(i);
     }
 }

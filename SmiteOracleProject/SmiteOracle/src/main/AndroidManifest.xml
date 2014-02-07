@@ -23,7 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.hirez.smiteoracle.SmiteAPIHandler"/>
+        <service android:enabled="true"
+                 android:name=".SmiteAPIHandler"
+                 android:label="SmiteAPIHandler"/>
     </application>
 
 </manifest>
