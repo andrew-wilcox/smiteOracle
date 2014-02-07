@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">SmiteOracle</string>
+    <string name="title_activity_item_list">ItemList</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
