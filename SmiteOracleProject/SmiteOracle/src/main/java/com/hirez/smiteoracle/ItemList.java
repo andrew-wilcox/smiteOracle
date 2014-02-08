@@ -56,10 +56,12 @@ public class ItemList extends Activity {
                 JSONObject response = string2JSON(jsonString);
 
                 try{
-                    Method m = ItemList.class.getDeclaredMethod("handle" + methodName, JSONObject.class);
-                    m.invoke(this, new Object[] { response });
+                    Log.v("class", ItemList.class.toString());
+                    Method m = ItemList.class.getMethod("handle" + methodName, new Class[] { JSONObject.class });
+                    Log.v("I receieved!", m.toString());
+                    m.invoke(new ItemList(), response);
                 } catch(Exception e){
-                    Log.d("Tag", e.getCause().toString());
+                    Log.e("SmiteAPIHandler", "exception", e);
                 }
             };
         }
@@ -106,7 +108,8 @@ public class ItemList extends Activity {
     //*************
     public void handlecreatesession(JSONObject response)
     {
-        Log.v("Handling", "Create Session");
+        Log.v("Test", response.toString());
+        Toast.makeText(, response.toString(), Toast.LENGTH_SHORT).show();
     }
 
     //****************
@@ -130,6 +133,6 @@ public class ItemList extends Activity {
         Intent i = new Intent(this, SmiteAPIHandler.class);
         i.putExtra("methodName", "createsession");
         i.putExtra("data", l);
-        startService(i);
+        this.startService(i);
     }
 }
