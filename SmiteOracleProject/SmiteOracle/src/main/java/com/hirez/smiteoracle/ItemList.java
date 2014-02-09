@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -24,14 +25,16 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class ItemList extends Activity {
+
+    TextView t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_list);
+        t = (TextView) this.findViewById(R.id.responseView);
     }
 
     @Override
@@ -108,8 +111,8 @@ public class ItemList extends Activity {
     //*************
     public void handlecreatesession(JSONObject response)
     {
-        Log.v("Test", response.toString());
-        Toast.makeText(, response.toString(), Toast.LENGTH_SHORT).show();
+        //Log.v("Test", response.toString());
+        t.setText(response.toString());
     }
 
     //****************

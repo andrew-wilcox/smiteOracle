@@ -13,4 +13,14 @@
         android:id="@+id/createSession"
         android:onClick="CreateSession"
         android:layout_gravity="left|top" />
+
+    <TextView
+        android:layout_width="108dp"
+        android:layout_height="95dp"
+        android:id="@+id/responseView"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="83dp"
+        android:layout_marginLeft="49dp"
+        android:layout_marginRight="46dp" />
+
 </FrameLayout>
