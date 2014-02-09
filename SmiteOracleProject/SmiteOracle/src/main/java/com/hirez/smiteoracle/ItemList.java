@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
@@ -30,6 +31,8 @@ import java.lang.reflect.Method;
 public class ItemList extends Activity {
 
     static TextView responseView;
+    static String session_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +59,22 @@ public class ItemList extends Activity {
             if (bundle != null) {
                 String jsonString = bundle.getString("response");
                 String methodName = bundle.getString("methodName");
-                JSONObject response = string2JSON(jsonString);
-
-                try{
-                    Method m = ItemList.class.getMethod("handle" + methodName, new Class[] { JSONObject.class });
-                    m.invoke(new ItemList(), response);
-                } catch(Exception e){
-                    Log.e("SmiteAPIHandler", "exception", e);
+                if(!jsonString.contains("[") && !jsonString.contains("{")){
+                    try{
+                        Method m = ItemList.class.getMethod("handle" + methodName, new Class[] { String.class });
+                        m.invoke(new ItemList(), jsonString);
+                    } catch(Exception e){
+                        Log.e("SmiteAPIHandler", "exception", e);
+                    }
+                }
+                else{
+                    JSONObject response = string2JSON(jsonString);
+                    try{
+                        Method m = ItemList.class.getMethod("handle" + methodName, new Class[] { JSONObject.class });
+                        m.invoke(new ItemList(), response);
+                    } catch(Exception e){
+                        Log.e("SmiteAPIHandler", "exception", e);
+                    }
                 }
             };
         }
@@ -109,8 +121,116 @@ public class ItemList extends Activity {
     //*************
     public void handlecreatesession(JSONObject response)
     {
-        //try{Log.v("Test", response.getString("ret_msg").toString());}catch(Exception e){}
-        try{responseView.setText(response.getString("ret_msg").toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        try{Log.v("handlecreatesession success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+    }
+
+    public void handleping(JSONObject response)
+    {
+        try{Log.v("handleping success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+    }
+
+    public void handletestsession(JSONObject response)
+    {
+        try{Log.v("handletestsession success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+    }
+
+    public void handlegetdataused(JSONObject response)
+    {
+        try{Log.v("handlegetdataused success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+    }
+
+    public void handlegetfriends(JSONObject response)
+    {
+        try{Log.v("handlegetfriends success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+    }
+
+    public void handlegetdemodetails(JSONObject response)
+    {
+        try{Log.v("handlegetdemodetails success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetgodranks(JSONObject response)
+    {
+        try{Log.v("handlegetgodrankssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetgods(JSONObject response)
+    {
+        try{Log.v("handlegetgodssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetitems(JSONObject response)
+    {
+        try{Log.v("handlegetitemssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetmatchdetails(JSONObject response)
+    {
+        try{Log.v("handlegetmatchdetailssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetleagueleaderboard(JSONObject response)
+    {
+        try{Log.v("handlegetleagueleaderboardsuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetleagueseasons(JSONObject response)
+    {
+        try{Log.v("handlegetleagueseasonssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetmatchhistory(JSONObject response)
+    {
+        try{Log.v("handlegetmatchhistorysuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetplayer(JSONObject response)
+    {
+        try{Log.v("handlegetplayersuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetteamdetails(JSONObject response)
+    {
+        try{Log.v("handlegetteamdetailssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetteammatchhistory(JSONObject response)
+    {
+        try{Log.v("handlegetteammatchhistorysuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegetteamplayers(JSONObject response)
+    {
+        try{Log.v("handlegetteamplayerssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlegettopmatches(JSONObject response)
+    {
+        try{Log.v("handlegettopmatchessuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+    }
+
+    public void handlesearchteams(JSONObject response)
+    {
+        try{Log.v("handlesearchteamssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
     }
 
     //****************
@@ -120,7 +240,13 @@ public class ItemList extends Activity {
     private JSONObject string2JSON(String s)
     {
         JSONObject jObj = null;
-        try{jObj = new JSONObject(s);}catch (Exception JSONException){}
+        if(s.charAt(0) == '['){
+            jObj = new JSONObject();
+            try{jObj.put("response", s);}catch (Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        }
+        else if(s.charAt(0) == '{'){
+            try{jObj = new JSONObject(s);}catch (Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        }
         return jObj;
     }
 
@@ -133,6 +259,15 @@ public class ItemList extends Activity {
         String[] l = {};
         Intent i = new Intent(this, SmiteAPIHandler.class);
         i.putExtra("methodName", "createsession");
+        i.putExtra("data", l);
+        this.startService(i);
+    }
+
+    public void GetDataUsed(View v)
+    {
+        String[] l = new String[1];
+        Intent i = new Intent(this, SmiteAPIHandler.class);
+        i.putExtra("methodName", "getgods");
         i.putExtra("data", l);
         this.startService(i);
     }
