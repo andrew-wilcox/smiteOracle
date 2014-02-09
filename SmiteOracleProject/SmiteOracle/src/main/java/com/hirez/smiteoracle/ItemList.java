@@ -29,12 +29,12 @@ import java.lang.reflect.Method;
 
 public class ItemList extends Activity {
 
-    TextView t;
+    static TextView responseView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_list);
-        t = (TextView) this.findViewById(R.id.responseView);
+        responseView = (TextView) findViewById(R.id.responseView);
     }
 
     @Override
@@ -59,9 +59,7 @@ public class ItemList extends Activity {
                 JSONObject response = string2JSON(jsonString);
 
                 try{
-                    Log.v("class", ItemList.class.toString());
                     Method m = ItemList.class.getMethod("handle" + methodName, new Class[] { JSONObject.class });
-                    Log.v("I receieved!", m.toString());
                     m.invoke(new ItemList(), response);
                 } catch(Exception e){
                     Log.e("SmiteAPIHandler", "exception", e);
@@ -111,8 +109,8 @@ public class ItemList extends Activity {
     //*************
     public void handlecreatesession(JSONObject response)
     {
-        //Log.v("Test", response.toString());
-        t.setText(response.toString());
+        //try{Log.v("Test", response.getString("ret_msg").toString());}catch(Exception e){}
+        try{responseView.setText(response.getString("ret_msg").toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
     //****************
