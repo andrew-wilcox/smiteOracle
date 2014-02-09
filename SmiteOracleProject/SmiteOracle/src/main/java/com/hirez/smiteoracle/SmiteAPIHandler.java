@@ -21,6 +21,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.security.AccessController;
@@ -82,7 +87,7 @@ public class SmiteAPIHandler extends IntentService {
 
     public void createsession(String[] data){ addToQueue(APIHelper.createsession(data)); }
 
-    public void ping(String[] data){ addToQueue(APIHelper.ping(data)); }
+    /*public void ping(String[] data){ addToQueue(APIHelper.ping(data)); }
 
     public void testsession(String[] data){ addToQueue(APIHelper.testsession(data)); }
 
@@ -92,11 +97,11 @@ public class SmiteAPIHandler extends IntentService {
 
     public void getfriends(String[] data){ addToQueue(APIHelper.getfriends(data)); }
 
-    public void getgodranks(String[] data){ addToQueue(APIHelper.getgodranks(data)); }
+    public void getgodranks(String[] data){ addToQueue(APIHelper.getgodranks(data)); }*/
 
     public void getgods(String[] data){ addToQueue(APIHelper.getgods(data)); }
 
-    public void getitems(String[] data){ addToQueue(APIHelper.getitems(data)); }
+    /*public void getitems(String[] data){ addToQueue(APIHelper.getitems(data)); }
 
     public void getmatchdetails(String[] data){ addToQueue(APIHelper.getmatchdetails(data)); }
 
@@ -118,7 +123,7 @@ public class SmiteAPIHandler extends IntentService {
 
     public void gettopmatches(String[] data) { addToQueue(APIHelper.gettopmatches(data)); }
 
-    public void searchteams(String[] data) { addToQueue(APIHelper.searchteams(data)); }
+    public void searchteams(String[] data) { addToQueue(APIHelper.searchteams(data)); }*/
 
     //*****************
     //SERVICE FUNCTIONS
@@ -154,11 +159,9 @@ public class SmiteAPIHandler extends IntentService {
         }
     }
 
-    public static void publishResults(String responseJson, String method){
+    public static void publishResults(String method){
         Log.v("Publishing Method", method);
-        Log.v("Publishing Response", responseJson);
         Intent i = new Intent("com.hirez.smiteoracle.ItemList");
-        i.putExtra("response", responseJson);
         i.putExtra("methodName", method);
         getContext().sendBroadcast(i);
     }

@@ -1,5 +1,6 @@
 package com.hirez.smiteoracle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
@@ -13,9 +14,14 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Logger;
 
 /**
  * Created by Andrew on 2/8/14.
@@ -31,9 +37,6 @@ public class APIHelper {
     private static String authKey = "F8004A8443AE4B47B5526E8DA7E93212";
     private static String apiUrl = "http://api.smitegame.com/smiteapi.svc/";
     private static String responseType = "json";
-
-    public SmiteAPIHandler s = new SmiteAPIHandler();
-
 
     //*************
     //createsession
@@ -56,17 +59,23 @@ public class APIHelper {
         return new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                SmiteAPIHandler.publishResults(jsonObject.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonObject.toString(), method);
+                Log.v("file size", "" + file.length());
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getCacheDir(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
     }
-
+/*
     //****
     //ping
     //****
@@ -282,16 +291,261 @@ public class APIHelper {
                 Log.v("error", volleyError.toString());
             }
         });
-    }
+    }*/
 
     //*******
     //getgods
     //*******
 
-    //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  [
+          //<editor-fold desc="Agni Example">
+    //    Example Response:
+    //    {
+    //       {
+    //         "ManaPerFive": 4.7,
+    //         "AttackSpeedPerLevel": 0.009,
+    //         "Cons": "",
+    //         "AbilityId2": 7811,
+    //         "AbilityId1": 7812,
+    //         "AbilityId4": 7824,
+    //         "AbilityId3": 7818,
+    //         "OnFreeRotation": "",
+    //         "abilityDescription1": {
+    //           "itemDescription": {
+    //             "cooldown": "12s",
+    //             "cost": "60\/70\/80\/90\/100",
+    //             "description": "Agni summons a cloud of noxious fumes at his ground target location, doing damage every second. Firing any of Agni's abilities into the fumes detonates the gas, stunning all enemies in the radius.",
+    //             "menuitems": [
+    //               {
+    //                 "value": "Ground Target",
+    //                 "description": "Ability:"
+    //               },
+    //               {
+    //                 "value": "Enemy",
+    //                 "description": "Affects:"
+    //               },
+    //               {
+    //                 "value": "Magical",
+    //                 "description": "Damage:"
+    //               },
+    //               {
+    //                 "value": "20",
+    //                 "description": "Radius:"
+    //               }
+    //             ],
+    //             "rankitems": [
+    //               {
+    //                 "value": "10\/20\/30\/40\/50 (+5% of your magical power)",
+    //                 "description": "Damage per Tick:"
+    //               },
+    //               {
+    //                 "value": "10s",
+    //                 "description": "Fumes Duration:"
+    //               },
+    //               {
+    //                 "value": "1s",
+    //                 "description": "Stun Duration:"
+    //               }
+    //             ],
+    //             "secondaryDescription": ""
+    //           }
+    //         },
+    //         "Item1": "Healing Potion",
+    //         "Pros": " High Area Damage",
+    //         "Item2": "Meditation",
+    //         "PhysicalProtectionPerLevel": 2.6,
+    //         "Ability2": "Flame Wave",
+    //         "AbilityId5": 7822,
+    //         "Ability3": "Path of Flames",
+    //         "Ability4": "Rain Fire",
+    //         "Ability5": "Combustion",
+    //         "MagicProtectionPerLevel": 0,
+    //         "Ability1": "Noxious Fumes",
+    //         "HP5PerLevel": 0.47,
+    //         "PhysicalPowerPerLevel": 0,
+    //         "HealthPerLevel": 71,
+    //         "Item8": "Obsidian Shard",
+    //         "Item7": "Void Stone",
+    //         "HealthPerFive": 7,
+    //         "Item9": "Rod of Tahuti",
+    //         "Item4": "Vampiric Shroud",
+    //         "Item3": "Sprint",
+    //         "Item6": "Warlock's Sash",
+    //         "Item5": "Shoes of the Magi",
+    //         "Lore": "There are few elements as destructive or as purifying as fire. Agni, God of Fire, is the embodiment of both of these qualities, with a head for each.\\n\\nThough the source of his origin warrants debate - for there are many tales of his parentage ranging from two simple sticks rubbed together, to the cosmic energy that made all things at the beginning of time - Agni is a pivotal and important God with many duties to the Pantheon. He is the twin brother to Indra, God of the Heavens and Rains and chief among warriors. Conversely, Agni is chief among priests, acting as messenger between mortals and Gods. Every Hindu ritual and prayer is performed in front of a fire of some kind, so Agni carries the words and sacrifices, traveling between the Earth and the Heavens. He is welcome in every home and every hearth and much beloved by the Faithful.\\n\\nThrough his flames, Agni provides heat and light, but also cleanses impurities. Smoke from his pyres create the air and hold the Heavens aloft. The sun, a source of fire itself, brings life-giving energy to the world, and his lightning streaks the sky during storms.\\n\\nFor all his kindness and service, Agni has two faces. One is the face of kindness and purity, turned towards the people and Gods. His other face, grim and resolute, guides the God of Fire, to play his role in the cosmic cycle of creation and destruction, to burn and blacken all the atrocities of the world to ash.",
+    //         "basicAttack": {
+    //           "itemDescription": {
+    //             "cooldown": "",
+    //             "cost": "",
+    //             "description": "",
+    //             "menuitems": [
+    //               {
+    //                 "value": "34 + 1.5\/Lvl (+20% of Magical Power)",
+    //                 "description": "Damage:"
+    //               },
+    //               {
+    //                 "value": "None",
+    //                 "description": "Progression:"
+    //               }
+    //             ],
+    //             "rankitems": [
+    //
+    //             ],
+    //             "secondaryDescription": ""
+    //           }
+    //         },
+    //         "MagicProtection": 30,
+    //         "PhysicalPower": 0,
+    //         "Type": " Ranged, Magical",
+    //         "abilityDescription4": {
+    //           "itemDescription": {
+    //             "cooldown": "Dependent on Halos",
+    //             "cost": "0",
+    //             "description": "Every 20 seconds, Agni gains a flaming halo that can be expended to summon a giant meteor at his ground target location. He can summon 1 every .8 seconds. Ignites Noxious Fumes.",
+    //             "menuitems": [
+    //               {
+    //                 "value": "Ground Target",
+    //                 "description": "Ability:"
+    //               },
+    //               {
+    //                 "value": "Enemy",
+    //                 "description": "Affects:"
+    //               },
+    //               {
+    //                 "value": "Magical",
+    //                 "description": "Damage:"
+    //               },
+    //               {
+    //                 "value": "20",
+    //                 "description": "Radius:"
+    //               }
+    //             ],
+    //             "rankitems": [
+    //               {
+    //                 "value": "160\/195\/230\/265\/300 (+60% of your magical power)",
+    //                 "description": "Damage:"
+    //               },
+    //               {
+    //                 "value": "3",
+    //                 "description": "Max Halos:"
+    //               }
+    //             ],
+    //             "secondaryDescription": ""
+    //           }
+    //         },
+    //         "ret_msg": null,
+    //         "abilityDescription5": {
+    //           "itemDescription": {
+    //             "cooldown": "",
+    //             "cost": "",
+    //             "description": "After hitting with 4 basic attacks, Agni will gain a buff. On the next cast of Flame Wave or RainFire, all enemies hit by those abilities will be additionally set ablaze, taking damage every .5s for 3s.",
+    //             "menuitems": [
+    //               {
+    //                 "value": "Enemy",
+    //                 "description": "Affects:"
+    //               },
+    //               {
+    //                 "value": "Magical",
+    //                 "description": "Damage:"
+    //               }
+    //             ],
+    //             "rankitems": [
+    //               {
+    //                 "value": "5 (+10% of your magical power)",
+    //                 "description": "Damage per Tick:"
+    //               }
+    //             ],
+    //             "secondaryDescription": ""
+    //           }
+    //         },
+    //         "Health": 360,
+    //         "abilityDescription2": {
+    //           "itemDescription": {
+    //             "cooldown": "15\/14\/13\/12\/11s",
+    //             "cost": "60\/70\/80\/90\/100",
+    //             "description": "Agni summons a wave of fire in front of him that scorches all enemies in its path.  Ignites Noxious Fumes.",
+    //             "menuitems": [
+    //               {
+    //                 "value": "Line",
+    //                 "description": "Ability:"
+    //               },
+    //               {
+    //                 "value": "Enemy",
+    //                 "description": "Affects:"
+    //               },
+    //               {
+    //                 "value": "Magical",
+    //                 "description": "Damage:"
+    //               }
+    //             ],
+    //             "rankitems": [
+    //               {
+    //                 "value": "90\/140\/190\/240\/290 (+50% of your magical power)",
+    //                 "description": "Damage:"
+    //               }
+    //             ],
+    //             "secondaryDescription": ""
+    //           }
+    //         },
+    //         "abilityDescription3": {
+    //           "itemDescription": {
+    //             "cooldown": "15s",
+    //             "cost": "70\/75\/80\/85\/90",
+    //             "description": "Agni blazes a path forward in a quick dash, leaving flamestrailing behind him. Any enemies passing through the flames catch fire and burn for damage every .5s for 2s. Ignites Noxious Fumes.",
+    //               "menuitems": [
+    //                 {
+    //                   "value": "Line",
+    //                   "description": "Ability:"
+    //                 },
+    //                 {
+    //                   "value": "Enemy",
+    //                   "description": "Affects:"
+    //                 },
+    //                 {
+    //                   "value": "Magical",
+    //                   "description": "Damage:"
+    //                 }
+    //               ],
+    //               "rankitems": [
+    //               {
+    //                 "value": "20\/30\/40\/50\/60 (+15% of your magical power)",
+    //                 "description": "Damage per Tick:"
+    //               },
+    //               {
+    //                 "value": "3s",
+    //                 "description": "Path Duration:"
+    //               }
+    //             ],
+    //             "secondaryDescription": ""
+    //           }
+    //         },
+    //         "ManaPerLevel": 45,
+    //         "Mana": 255,
+    //         "id": 1737,
+    //         "Pantheon": "Hindu",
+    //         "MP5PerLevel": 0.37,
+    //         "Roles": " Mage",
+    //         "AttackSpeed": 0.86,
+    //         "PhysicalProtection": 11,
+    //         "ItemId8": 7525,
+    //         "ItemId9": 7600,
+    //         "ItemId6": 7917,
+    //         "ItemId7": 7791,
+    //         "ItemId4": 8247,
+    //         "ItemId5": 9633,
+    //         "ItemId2": 8905,
+    //         "ItemId3": 8881,
+    //         "ItemId1": 7621,
+    //         "Title": "God of Fire",
+    //         "Name": "Agni",
+    //         "Speed": 350
+    //      }
+    //    }
+    //</editor-fold>
+    //  ]
     //}
+
     public static JsonArrayRequest getgods(String[] data)
     {
         String timestamp = getTimestamp();
@@ -306,18 +560,22 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                Log.v("long string", Integer.toString(jsonArray.toString().length()));
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getCacheDir(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
     }
-
+/*
     //********
     //getitems
     //********
@@ -680,7 +938,7 @@ public class APIHelper {
                 Log.v("error", volleyError.toString());
             }
         });
-    }
+    }*/
 
     public static String getTimestamp()
     {
@@ -705,4 +963,17 @@ public class APIHelper {
         } catch (java.security.NoSuchAlgorithmException e) {}
         return null;
     }
+
+    public static void writeToFile(final String fileContents, String fileName) {
+        Context context = SmiteAPIHandler.getContext().getApplicationContext();
+        try {
+            Log.v("Contents", fileContents);
+            FileWriter out = new FileWriter(new File(context.getFilesDir(), fileName));
+            out.write(fileContents);
+            out.close();
+        } catch (IOException e) {
+            Log.e("SmiteAPIHandler", "exception", e);
+        }
+    }
+
 }

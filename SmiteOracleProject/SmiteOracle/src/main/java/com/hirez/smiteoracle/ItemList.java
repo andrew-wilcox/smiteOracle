@@ -25,7 +25,16 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 
 
 public class ItemList extends Activity {
@@ -57,25 +66,11 @@ public class ItemList extends Activity {
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                String jsonString = bundle.getString("response");
                 String methodName = bundle.getString("methodName");
-                if(!jsonString.contains("[") && !jsonString.contains("{")){
-                    try{
-                        Method m = ItemList.class.getMethod("handle" + methodName, new Class[] { String.class });
-                        m.invoke(new ItemList(), jsonString);
-                    } catch(Exception e){
-                        Log.e("SmiteAPIHandler", "exception", e);
-                    }
-                }
-                else{
-                    JSONObject response = string2JSON(jsonString);
-                    try{
-                        Method m = ItemList.class.getMethod("handle" + methodName, new Class[] { JSONObject.class });
-                        m.invoke(new ItemList(), response);
-                    } catch(Exception e){
-                        Log.e("SmiteAPIHandler", "exception", e);
-                    }
-                }
+                try{
+                    Method m = ItemList.class.getMethod("handle" + methodName, String.class);
+                    m.invoke(new ItemList(), methodName);
+                } catch(Exception e){ Log.e("SmiteAPIHandler", "exception", e); }
             };
         }
     };
@@ -119,10 +114,13 @@ public class ItemList extends Activity {
     //*************
     //API FUNCTIONS
     //*************
-    public void handlecreatesession(JSONObject response)
+    public void handlecreatesession(String methodName)
     {
-        try{Log.v("handlecreatesession success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        try{Log.v("handlecreatesession success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        JSONObject jsonResponse = string2JSON(response);
+        try{session_id = jsonResponse.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
     public void handleping(JSONObject response)
@@ -161,9 +159,25 @@ public class ItemList extends Activity {
         //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
     }
 
-    public void handlegetgods(JSONObject response)
+    public void handlegetgods(String methodName)
     {
-        try{Log.v("handlegetgodssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        String response = null;
+        JSONObject agni = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        try{agni = string2JSON(response).getJSONArray("response").getJSONObject(0);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        /*Iterator<String> iter = agni.keys();
+        while(iter.hasNext())
+        {
+            String key = iter.next();
+            try{Log.v(key, agni.get(key).toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        }*/
+        int maxLogSize = 1000;
+        for(int i = 0; i <= agni.toString().length() / maxLogSize; i++) {
+            int start = i * maxLogSize;
+            int end = (i+1) * maxLogSize;
+            end = end > agni.toString().length() ? agni.toString().length() : end;
+            Log.v("agni", agni.toString().substring(start, end));
+        }
         //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
     }
 
@@ -240,14 +254,50 @@ public class ItemList extends Activity {
     private JSONObject string2JSON(String s)
     {
         JSONObject jObj = null;
+        JSONArray jArr = null;
         if(s.charAt(0) == '['){
             jObj = new JSONObject();
-            try{jObj.put("response", s);}catch (Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+            try{jArr = new JSONArray(s);}catch (Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+            try{jObj.put("response", jArr);}catch (Exception e){Log.e("SmiteAPIHandler", "exception", e);}
         }
         else if(s.charAt(0) == '{'){
             try{jObj = new JSONObject(s);}catch (Exception e){Log.e("SmiteAPIHandler", "exception", e);}
         }
         return jObj;
+    }
+
+    private String readFromFile(String path) {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = SmiteAPIHandler.getContext().openFileInput(path);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+
+                //Automatically delete the file post-read
+                //This shouldn't be a problem in this app, unless I forget this does this
+                SmiteAPIHandler.getContext().deleteFile(path);
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 
     //*******
