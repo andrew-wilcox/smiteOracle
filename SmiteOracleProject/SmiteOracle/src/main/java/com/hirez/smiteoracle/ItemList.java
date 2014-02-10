@@ -42,6 +42,8 @@ public class ItemList extends Activity {
     static TextView responseView;
     static String session_id;
 
+    final int maxLogSize = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,45 +120,54 @@ public class ItemList extends Activity {
     {
         String response = null;
         try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        try{Log.v("handlecreatesession success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlecreatesession success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
         JSONObject jsonResponse = string2JSON(response);
         try{session_id = jsonResponse.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handleping(JSONObject response)
+    //BROKEN
+    /*public void handleping(String methodName)
     {
-        try{Log.v("handleping success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        String response = null;
+        JSONObject agni = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        try{Log.v("handleping success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
         //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+    }*/
+
+    public void handletestsession(String methodName)
+    {
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handletestsession success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handletestsession(JSONObject response)
+    public void handlegetdataused(String methodName)
     {
-        try{Log.v("handletestsession success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlegetdataused success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetdataused(JSONObject response)
+    public void handlegetfriends(String methodName)
     {
-        try{Log.v("handlegetdataused success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlegetfriends success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetfriends(JSONObject response)
+    public void handlegetdemodetails(String methodName)
     {
-        try{Log.v("handlegetfriends success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlegetdemodetails success", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetdemodetails(JSONObject response)
+    public void handlegetgodranks(String methodName)
     {
-        try{Log.v("handlegetdemodetails success", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
-    }
-
-    public void handlegetgodranks(JSONObject response)
-    {
-        try{Log.v("handlegetgodrankssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlegetgodrankssuccess", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
     public void handlegetgods(String methodName)
@@ -164,87 +175,94 @@ public class ItemList extends Activity {
         String response = null;
         JSONObject agni = null;
         try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        try{agni = string2JSON(response).getJSONArray("response").getJSONObject(0);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        /*Iterator<String> iter = agni.keys();
-        while(iter.hasNext())
-        {
-            String key = iter.next();
-            try{Log.v(key, agni.get(key).toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        }*/
-        int maxLogSize = 1000;
-        for(int i = 0; i <= agni.toString().length() / maxLogSize; i++) {
-            int start = i * maxLogSize;
-            int end = (i+1) * maxLogSize;
-            end = end > agni.toString().length() ? agni.toString().length() : end;
-            Log.v("agni", agni.toString().substring(start, end));
-        }
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        //try{logLongString("handlegetgods", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetitems(JSONObject response)
+    public void handlegetitems(String methodName)
     {
-        try{Log.v("handlegetitemssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString("handlegetitems", string2JSON(response).getJSONArray("response").getJSONObject(0).toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetmatchdetails(JSONObject response)
+    public void handlegetmatchdetails(String methodName)
     {
-        try{Log.v("handlegetmatchdetailssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString(response, "handlegetmatchdetails");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetleagueleaderboard(JSONObject response)
+    public void handlegetleagueleaderboard(String methodName)
     {
-        try{Log.v("handlegetleagueleaderboardsuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString(response, "handlegetleagueleaderboard");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetleagueseasons(JSONObject response)
+    public void handlegetleagueseasons(String methodName)
     {
-        try{Log.v("handlegetleagueseasonssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlegetleagueseasons", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetmatchhistory(JSONObject response)
+    public void handlegetmatchhistory(String methodName)
     {
-        try{Log.v("handlegetmatchhistorysuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString("handlegetmatchhistory", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetplayer(JSONObject response)
+    public void handlegetplayer(String methodName)
     {
-        try{Log.v("handlegetplayersuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString("handlegetplayer", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetteamdetails(JSONObject response)
+    public void handlegetqueuestats(String methodName)
     {
-        try{Log.v("handlegetteamdetailssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString("handlegetqueuestats", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetteammatchhistory(JSONObject response)
+    public void handlegetteamdetails(String methodName)
     {
-        try{Log.v("handlegetteammatchhistorysuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString("handlegetteamdetails", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegetteamplayers(JSONObject response)
+    //BROKEN
+    /*
+    public void handlegetteammatchhistory(String methodName)
     {
-        try{Log.v("handlegetteamplayerssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString("handlegetteammatchhistory", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+    }
+    */
+
+    public void handlegetteamplayers(String methodName)
+    {
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlegetteamplayers", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlegettopmatches(JSONObject response)
+    public void handlegettopmatches(String methodName)
     {
-        try{Log.v("handlegettopmatchessuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{Log.v("handlegettopmatches", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
-    public void handlesearchteams(JSONObject response)
+    public void handlesearchteams(String methodName)
     {
-        try{Log.v("handlesearchteamssuccess", response.toString());}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
-        //try{session_id = response.getString("session_id");}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}s
+        String response = null;
+        try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
+        //try{logLongString("handlesearchteams", response);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
     }
 
     //****************
@@ -300,6 +318,16 @@ public class ItemList extends Activity {
         return ret;
     }
 
+    private void logLongString(String tag, String s)
+    {
+        for(int i = 0; i <= s.length() / maxLogSize; i++) {
+            int start = i * maxLogSize;
+            int end = (i+1) * maxLogSize;
+            end = end > s.length() ? s.length() : end;
+            Log.v(tag, s.substring(start, end));
+        }
+    }
+
     //*******
     //BUTTONS
     //*******
@@ -317,7 +345,7 @@ public class ItemList extends Activity {
     {
         String[] l = new String[1];
         Intent i = new Intent(this, SmiteAPIHandler.class);
-        i.putExtra("methodName", "getgods");
+        i.putExtra("methodName", "getdataused");
         i.putExtra("data", l);
         this.startService(i);
     }

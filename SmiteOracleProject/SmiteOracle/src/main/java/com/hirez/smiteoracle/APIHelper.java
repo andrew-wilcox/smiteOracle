@@ -29,8 +29,7 @@ import java.util.logging.Logger;
  * Each API Function is defined here, and has the jsonobject/arrayrequest
  * set up. SmiteAPIHandler can then simply reach out to this for a request
  * object and add it to the queue from there. The API, according to Hi-Rez
- * is "self-documenting" which is such utter bullshit that I've taken it
- * upon myself to document the responses here.
+ * is "self-documenting." I've found it helpful to document it myself.
  */
 public class APIHelper {
     private static String devID = "1158";
@@ -75,7 +74,7 @@ public class APIHelper {
             }
         });
     }
-/*
+
     //****
     //ping
     //****
@@ -84,7 +83,9 @@ public class APIHelper {
     //{
     //    TODO: Actually get this response...
     //}
-    public static JsonObjectRequest ping(String[] data)
+
+    //CURRENTLY BROKEN
+    /*public static JsonObjectRequest ping(String[] data)
     {
         String timestamp = getTimestamp();
         final String method = "ping";
@@ -95,16 +96,22 @@ public class APIHelper {
         return new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                SmiteAPIHandler.publishResults(jsonObject.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonObject.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
-    }
+    }*/
 
     //***********
     //testsession
@@ -126,12 +133,18 @@ public class APIHelper {
         return new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                SmiteAPIHandler.publishResults(s, method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(s, method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -142,8 +155,11 @@ public class APIHelper {
     //***********
 
     //Example Response:
-    //[
-    //    {
+    //{
+    //  "response":
+    //    [
+            //<editor-fold desc="Data Used">
+    //      {
     //        "Active_Sessions":1,
     //        "Concurrent_Sessions":50,
     //        "ret_msg":null,
@@ -152,8 +168,10 @@ public class APIHelper {
     //        "Session_Time_Limit":15,
     //        "Session_Cap":500,
     //        "Total_Requests_Today":11
-    //    }
-    //]
+    //      }
+    //</editor-fold>
+    //    ]
+    //}
     public static JsonArrayRequest getdataused(String[] data)
     {
         String timestamp = getTimestamp();
@@ -166,12 +184,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -182,8 +206,11 @@ public class APIHelper {
     //**************
 
     //Example Response:
-    //[
-    //    {
+    //{
+    //  "response":
+    //    [
+            //<editor-fold desc="Demo Detail">
+    //      {
     //        "Recording_Started":"",
     //        "Match":45382616,
     //        "ret_msg":null,
@@ -203,8 +230,10 @@ public class APIHelper {
     //        "Ban1":"",
     //        "Entry_Datetime":"2\/9\/2014 5:52:35 AM",
     //        "Ban2":""
-    //     }
-    //]
+    //      }
+    //</editor-fold>
+    //    ]
+    //}
     public static JsonArrayRequest getdemodetails(String[] data)
     {
         String timestamp = getTimestamp();
@@ -217,12 +246,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -233,10 +268,17 @@ public class APIHelper {
     //**********
 
     //Example Response:
-    //[
-    //    {"ret_msg":null,"name":"HiRezBart"},
-    //    {"ret_msg":null,"name":"hellokellylink"}
-    //]
+    //{
+    //  "response":
+    //    [
+            //<editor-fold desc="Friend">
+    //      {
+    //        "ret_msg":null,
+    //        "name":"HiRezBart"
+    //      }
+    //</editor-fold>
+    //    ]
+    //}
     public static JsonArrayRequest getfriends(String[] data)
     {
         String timestamp = getTimestamp();
@@ -249,12 +291,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -265,11 +313,19 @@ public class APIHelper {
     //***********
 
     //Example Response:
-    //[
-    //    {"ret_msg":null,"Worshippers":899,"Rank":8,"god":"Arachne"},
-    //    {"ret_msg":null,"Worshippers":355,"Rank":3,"god":"Anhur"},
-    //    {"ret_msg":null,"Worshippers":292,"Rank":2,"god":"Vulcan"}
-    //]
+    //{
+    //  "response":
+    //    [
+            //<editor-fold desc="God">
+    //      {
+    //        "ret_msg":null,
+    //        "Worshippers":899,
+    //        "Rank":8,
+    //        "god":"Arachne"
+    //      }
+    //</editor-fold>
+    //    ]
+    //}
     public static JsonArrayRequest getgodranks(String[] data)
     {
         String timestamp = getTimestamp();
@@ -282,24 +338,31 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
-    }*/
+    }
 
     //*******
     //getgods
     //*******
 
     //{
-    //  [
-          //<editor-fold desc="Agni Example">
+    //  "response":
+    //    [
+            //<editor-fold desc="Agni">
     //    Example Response:
     //    {
     //       {
@@ -543,7 +606,7 @@ public class APIHelper {
     //      }
     //    }
     //</editor-fold>
-    //  ]
+    //    ]
     //}
 
     public static JsonArrayRequest getgods(String[] data)
@@ -551,8 +614,6 @@ public class APIHelper {
         String timestamp = getTimestamp();
         final String method = "getgods";
         final String session_id = ItemList.session_id;
-
-        data[0] = "1";
 
         String url = apiUrl + method + responseType + '/' + devID + '/' + getSignature(method, timestamp) + '/' + session_id +  '/' + timestamp + '/' + data[0];
         Log.v("url", url);
@@ -575,14 +636,55 @@ public class APIHelper {
             }
         });
     }
-/*
+
     //********
     //getitems
     //********
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Hide of Leviathan">
+    //  {
+    //    "DeviceName":"Hide of Leviathan",
+    //    "ItemId":7375,
+    //    "IconId":1824,
+    //    "StartingItem":false,
+    //    "Type":"Item",
+    //    "Price":830,
+    //    "RootItemId":7375,
+    //    "ret_msg":null,
+    //    "ShortDesc":"Crowd Control Reduction",
+    //    "ItemTier":1,
+    //    "ChildItemId":0,
+    //    "ItemDescription":
+    //      {
+    //        "Description":"This item gives the owner reduced crowd control durations.",
+    //        "Menuitems":
+    //          [
+    //            {
+    //              "Description":"Physical Protection",
+    //              "Value":"+15"
+    //            },
+    //            {
+    //              "Description":"Magical Protection",
+    //              "Value":"+15"
+    //            },
+    //            {
+    //              "Description":"Health",
+    //              "Value":"+50"
+    //            },
+    //            {
+    //              "Description":"Mana",
+    //              "Value":"+50"
+    //            }
+    //          ],
+    //        "SecondaryDescription":""
+    //      }
+    //   }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getitems(String[] data)
     {
@@ -596,12 +698,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -613,7 +721,72 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Player">
+    //      {
+    //        "Ban3Id":0,
+    //        "Final_Match_Level":20,
+    //        "Damage_Taken":10434,
+    //        "Gold_Earned":14072,
+    //        "ActiveId2":8879,
+    //        "ActiveId1":7353,
+    //        "Killing_Spree":8,
+    //        "Surrendered":null,
+    //        "Team_Name":"Dweeb Syndicate",
+    //        "Ban2Id":0,
+    //        "Ban3":"",
+    //        "Ban4":"",
+    //        "Ban1Id":0,
+    //        "Kills_Player":8,
+    //        "Ban1":"",
+    //        "Win_Status":"Winner",
+    //        "Ban2":"",
+    //        "playerName":"[dwèèb]Awesomesome",
+    //        "Reference_Name":"Anhur",
+    //        "Mastery_Level":19,
+    //        "Account_Level":30,
+    //        "Gold_Per_Minute":469,
+    //        "Ban4Id":0,
+    //        "Multi_kill_Max":4,
+    //        "SkinId":8291,"TeamId":207123,
+    //        "Deaths":0,
+    //        "Team1Score":0,
+    //        "Healing":0,
+    //        "PartyId":16313638,
+    //        "ret_msg":null,
+    //        "Assists":6,
+    //        "Kills_Bot":200,
+    //        "Structure_Damage":2328,
+    //        "GodId":1773,
+    //        "name":"Normal: Conquest",
+    //        "Damage_Done_Magical":0,
+    //        "Entry_Datetime":"2\/9\/2014 10:18:06 PM",
+    //        "Skin":"Golden",
+    //        "Damage_Bot":80289,
+    //        "Team2Score":0,
+    //        "ItemId6":0,
+    //        "Match":45523436,
+    //        "ItemId4":9375,
+    //        "ItemId5":7545,
+    //        "ItemId2":9626,
+    //        "ItemId3":9348,
+    //        "ItemId1":7920,
+    //        "Item_Purch_1":"Heartseeker",
+    //        "Item_Purch_2":"Warrior Tabi",
+    //        "Item_Purch_3":"Asi",
+    //        "Item_Purch_4":"Qin's Sais",
+    //        "Item_Purch_5":"Deathbringer",
+    //        "Item_Purch_6":"",
+    //        "Item_Active_3":"",
+    //        "Item_Active_2":"Purification Beads",
+    //        "Item_Active_1":"Sprint",
+    //        "Minutes":30,
+    //        "Damage_Done_Physical":94277,
+    //        "Damage_Player":13988
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getmatchdetails(String[] data)
     {
@@ -627,12 +800,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -644,7 +823,24 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Player Stats">
+    //      {
+    //        "Wins": 43,
+    //        "Name": "Crim\u00ecnal",
+    //        "VictoryPoints": 0,
+    //        "Tier": 0,
+    //        "PrevRank": 1,
+    //        "Rank": 1,
+    //        "Losses": 15,
+    //        "ret_msg": null,
+    //        "Season": 4,
+    //        "Leaves": 0,
+    //        "Points": 1526
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getleagueleaderboard(String[] data)
     {
@@ -658,12 +854,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -675,7 +877,23 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Seasons">
+    //      {
+    //        "ret_msg":null,
+    //        "id":2,
+    //        "complete":true,
+    //        "name":"Season 2"
+    //      },
+    //      {
+    //        "ret_msg":null,
+    //        "id":1,
+    //        "complete":true,
+    //        "name":"Season 1"
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getleagueseasons(String[] data)
     {
@@ -689,12 +907,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -706,7 +930,55 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Match">
+    //      {
+    //        "Healing": 0,
+    //        "Kills": 5,
+    //        "Active_3": null,
+    //        "Active_1": "Fist of the Gods",
+    //        "Active_2": "",
+    //        "ret_msg": null,
+    //        "Damage_Taken": 26225,
+    //        "Assists": 7,
+    //        "ActiveId2": 0,
+    //        "ActiveId1": 9038,
+    //        "Killing_Spree": 1,
+    //        "Surrendered": null,
+    //        "GodId": 1699,
+    //        "Gold": 11517,
+    //        "Queue": "Normal: Conquest",
+    //        "Match_Time": "2\/9\/2014 10:18:06 PM",
+    //        "Win_Status": "Loss",
+    //        "Damage": 13338,
+    //        "Skin": "Black Widow",
+    //        "playerName": "Caerulius",
+    //        "Team2Score": 0,
+    //        "Item_6": "Bulwark of Hope",
+    //        "Item_5": "Witch Stone",
+    //        "ItemId6": 8555,
+    //        "Match": 45523436,
+    //        "Item_4": "Qin's Sais",
+    //        "Item_3": "Ninja Tabi",
+    //        "ItemId4": 9375,
+    //        "Item_2": "Heartseeker",
+    //        "ItemId5": 7910,
+    //        "Item_1": "Bumba's Mask",
+    //        "ItemId2": 7920,
+    //        "ItemId3": 9627,
+    //        "ItemId1": 8987,
+    //        "Multi_kill_Max": 1,
+    //        "SkinId": 7771,
+    //        "God": "Arachne",
+    //        "Deaths": 10,
+    //        "Level": 16,
+    //        "Minutes": 30,
+    //        "Team1Score": 0,
+    //        "Creeps": 86
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getmatchhistory(String[] data)
     {
@@ -720,12 +992,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -737,7 +1015,55 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Stats">
+    //      {
+    //        "Wins":692,
+    //        "LeagueArena":
+    //          {
+    //            "Wins":0,
+    //            "Name":"Arena",
+    //            "VictoryPoints":125,
+    //            "Tier":0,
+    //            "PrevRank":0,
+    //            "Rank":0,
+    //            "Losses":0,
+    //            "ret_msg":null,
+    //            "Season":0,
+    //            "Leaves":0,
+    //            "Points":0
+    //          },
+    //        "ret_msg":null,
+    //        "Leaves":16,
+    //        "MasteryLevel":49,
+    //        "LeagueConquest":
+    //          {
+    //            "Wins":0,
+    //            "Name":"Conquest",
+    //            "VictoryPoints":125,
+    //            "Tier":0,
+    //            "PrevRank":0,
+    //            "Rank":0,
+    //            "Losses":0,
+    //            "ret_msg":null,
+    //            "Season":0,
+    //            "Leaves":0,
+    //            "Points":0
+    //          },
+    //        "Name":"[LUE]Caerulius",
+    //        "Rank_Stat_Arena":0,
+    //        "Team_Name":"LUELINKS",
+    //        "Created_Datetime":"7\/4\/2012 1:43:15 PM",
+    //        "Last_Login_Datetime":"2\/9\/2014 8:54:56 PM",
+    //        "TeamId":73542,
+    //        "Losses":632,
+    //        "Rank_Stat":1000,
+    //        "Level":30,
+    //        "Id":138130
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getplayer(String[] data)
     {
@@ -751,17 +1077,50 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
     }
 
+    //*************
+    //getqueuestats
+    //*************
+
+    //Example Response:
+    //{
+    //  "response":
+    //    [
+            //<editor-fold desc="Queue Stats">
+    //      {
+    //        "Wins": 8,
+    //        "Kills": 108,
+    //        "LastPlayed": "12\/17\/2013 10:05:07 PM",
+    //        "GodId": 1699,
+    //        "Losses": 3,
+    //        "ret_msg": null,
+    //        "Assists": 140,
+    //        "Gold": 142133,
+    //        "God": "Arachne",
+    //        "Deaths": 68,
+    //        "Queue": "Leagues: Conquest",
+    //        "Minutes": 374,
+    //        "Matches": 11
+    //      }
+    //</editor-fold>
+    //    ]
+    //}
     public static JsonArrayRequest getqueuestats(String[] data)
     {
         String timestamp = getTimestamp();
@@ -774,12 +1133,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -791,7 +1156,22 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Team Details">
+    //      {
+    //        "Wins":0,
+    //        "Name":"CognitiveGaming",
+    //        "Rating":0,
+    //        "TeamId":47025,
+    //        "Tag":"COG",
+    //        "Losses":0,
+    //        "ret_msg":null,
+    //        "Players":10,
+    //        "Founder":"Mattypocket"
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getteamdetails(String[] data)
     {
@@ -805,12 +1185,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -824,6 +1210,9 @@ public class APIHelper {
     //{
     //    TODO: Actually get this response...
     //}
+
+    //SEEMS BROKEN FOR NOW
+    /*
     public static JsonArrayRequest getteammatchhistory(String[] data)
     {
         String timestamp = getTimestamp();
@@ -836,16 +1225,23 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
     }
+    */
 
     //**************
     //getteamplayers
@@ -853,7 +1249,18 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Player">
+    //      {
+    //        "ret_msg": null,
+    //        "Name": "Mattypocket",
+    //        "JoinedDatetime": "7\/24\/2013 5:27:33 PM",
+    //        "AccountLevel": 30,
+    //        "LastLoginDatetime": "2\/9\/2014 6:59:59 AM"
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest getteamplayers(String[] data)
     {
@@ -867,12 +1274,18 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -884,26 +1297,60 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //    //<editor-fold desc="Match">
+    //      {
+    //        "RecordingFinished": "2\/7\/2014 1:20:00 AM",
+    //        "RecordingStarted": "2\/7\/2014 1:20:00 AM",
+    //        "Match": 44960253,
+    //        "LiveSpectators": 7,
+    //        "ret_msg": null,
+    //        "Team1_Score": 0,
+    //        "Team2_AvgLevel": 20,
+    //        "Team2_Kills": 30,
+    //        "Team1_Gold": 72146,
+    //        "Team2_Score": 0,
+    //        "WinningTeam": 2,
+    //        "Ban2Id": 1737,
+    //        "Team2_Gold": 85488,
+    //        "Queue": "Conquest Challenge",
+    //        "Team1_Kills": 28,
+    //        "Ban1Id": 1672,
+    //        "OfflineSpectators": 48,
+    //        "Match_Time": 34,
+    //        "Team1_AvgLevel": 19,
+    //        "Ban1": "Zeus",
+    //        "Entry_Datetime": "2\/7\/2014 1:18:56 AM",
+    //        "Ban2": "Agni"
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest gettopmatches(String[] data)
     {
         String timestamp = getTimestamp();
-        final String method = "getteamplayers";
+        final String method = "gettopmatches";
         final String session_id = ItemList.session_id;
 
-        String url = apiUrl + method + responseType + '/' + devID + '/' + getSignature(method, timestamp) + '/' + session_id +  '/' + timestamp + '/' + data[0];
+        String url = apiUrl + method + responseType + '/' + devID + '/' + getSignature(method, timestamp) + '/' + session_id +  '/' + timestamp;
         Log.v("url", url);
 
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
@@ -915,7 +1362,19 @@ public class APIHelper {
 
     //Example Response:
     //{
-    //    TODO: Actually get this response...
+    //  "response":
+    //    [
+            //<editor-fold desc="Team Result">
+    //      {
+    //        "ret_msg": null,
+    //        "Players": 5,
+    //        "Name": "Cognitive Forge",
+    //        "Founder": "Resterian",
+    //        "TeamId": 25386,
+    //        "Tag": "CoGFG"
+    //      }
+    //</editor-fold>
+    //    ]
     //}
     public static JsonArrayRequest searchteams(String[] data)
     {
@@ -929,16 +1388,26 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                SmiteAPIHandler.publishResults(jsonArray.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(jsonArray.toString(), method);
+                SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                SmiteAPIHandler.publishResults(volleyError.toString(), method);
+                File file;
+                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                writeToFile(volleyError.toString(), method);
+                SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
         });
-    }*/
+    }
+
+    //****************
+    //HELPER FUNCTIONS
+    //****************
 
     public static String getTimestamp()
     {
