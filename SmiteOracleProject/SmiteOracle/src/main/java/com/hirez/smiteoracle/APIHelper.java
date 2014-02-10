@@ -1,7 +1,6 @@
 package com.hirez.smiteoracle;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -17,11 +16,14 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 
 /**
  * Created by Andrew on 2/8/14.
@@ -33,9 +35,11 @@ import java.util.logging.Logger;
  */
 public class APIHelper {
     private static String devID = "1158";
-    private static String authKey = "F8004A8443AE4B47B5526E8DA7E93212";
+    final static String authKey = "F8004A8443AE4B47B5526E8DA7E93212";
     private static String apiUrl = "http://api.smitegame.com/smiteapi.svc/";
     private static String responseType = "json";
+
+
 
     //*************
     //createsession
@@ -1383,7 +1387,7 @@ public class APIHelper {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
             byte[] array = md.digest(md5.getBytes());
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < array.length; ++i) {
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
             }
