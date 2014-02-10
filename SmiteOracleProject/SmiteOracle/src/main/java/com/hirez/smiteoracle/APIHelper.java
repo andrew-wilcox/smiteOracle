@@ -58,17 +58,14 @@ public class APIHelper {
         return new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonObject.toString(), method);
-                Log.v("file size", "" + file.length());
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getCacheDir(), method);
+                new File(SmiteAPIHandler.getContext().getCacheDir(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
@@ -96,16 +93,14 @@ public class APIHelper {
         return new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonObject.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -133,16 +128,14 @@ public class APIHelper {
         return new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(s, method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -184,16 +177,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -246,16 +237,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -291,16 +280,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -338,16 +325,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -621,16 +606,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getCacheDir(), method);
+                new File(SmiteAPIHandler.getContext().getCacheDir(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
             }
@@ -698,16 +681,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -800,16 +781,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -854,16 +833,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -907,16 +884,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -992,16 +967,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1077,16 +1050,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1133,16 +1104,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1185,16 +1154,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1225,16 +1192,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1274,16 +1239,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1339,16 +1302,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1388,16 +1349,14 @@ public class APIHelper {
         return new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(jsonArray.toString(), method);
                 SmiteAPIHandler.publishResults(method);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                File file;
-                file = new File(SmiteAPIHandler.getContext().getFilesDir(), method);
+                new File(SmiteAPIHandler.getContext().getFilesDir(), method);
                 writeToFile(volleyError.toString(), method);
                 SmiteAPIHandler.publishResults(method);
                 Log.v("error", volleyError.toString());
@@ -1429,7 +1388,7 @@ public class APIHelper {
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
             }
             return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException e) {}
+        } catch (java.security.NoSuchAlgorithmException e) { Log.e("SmiteAPIHandler", "exception", e); }
         return null;
     }
 

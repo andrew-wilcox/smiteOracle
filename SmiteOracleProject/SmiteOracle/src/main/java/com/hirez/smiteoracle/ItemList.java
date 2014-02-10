@@ -345,7 +345,7 @@ public class ItemList extends Activity {
     {
         String[] l = new String[1];
         Intent i = new Intent(this, SmiteAPIHandler.class);
-        i.putExtra("methodName", "getdataused");
+        i.putExtra("methodName", "searchteams");
         i.putExtra("data", l);
         this.startService(i);
     }
