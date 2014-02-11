@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ItemList"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame"
+    android:background="@drawable/bg"
+    android:clickable="true">
 
     <ListView
         android:layout_width="wrap_content"
@@ -12,5 +14,5 @@
         android:id="@+id/itemList"
         android:layout_gravity="center"
         android:choiceMode="singleChoice"
-        android:clickable="true" />
+        android:clickable="true"/>
 </FrameLayout>

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -160,8 +161,15 @@ public class ItemList extends Activity {
         ItemListAdapter adapter = new ItemListAdapter(this, R.layout.item_row, items);
 
         itemListView = (ListView)findViewById(R.id.itemList);
-
         itemListView.setAdapter(adapter);
+        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                Toast.makeText(getApplicationContext(), items.get(position).getItemName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        adapter.notifyDataSetChanged();
     }
 
     public void getItemList(JSONObject object)
@@ -174,8 +182,9 @@ public class ItemList extends Activity {
             for(int i=0;i<arr.length();i++)
             {
                 JSONObject j = arr.getJSONObject(i);
-                if(j.getInt("ItemTier") == 1)
+                if(j.getInt("ItemTier") == 1 && !j.getString("Type").equals("Consumable") && !j.getString("Type").equals("Active"))
                 {
+                    Log.v("item", j.toString());
                     items.add(new Item(arr.getJSONObject(i)));
                 }
             }

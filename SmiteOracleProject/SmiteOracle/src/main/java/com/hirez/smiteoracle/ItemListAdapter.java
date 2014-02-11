@@ -6,12 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Andrew on 2/10/14.
@@ -55,6 +59,17 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
         holder.imgIcon.setImageResource(context.getResources().getIdentifier(item.getImageName(), "drawable", "com.hirez.smiteoracle"));
 
         return row;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        Collections.sort(items, new Comparator<Item>() {
+            public int compare(Item i1, Item i2) {
+                return i1.getItemName().compareToIgnoreCase(i2.getItemName());
+            }
+        });
+
+        super.notifyDataSetChanged();
     }
 
     static class ItemHolder

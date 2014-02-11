@@ -99,7 +99,6 @@ public class Item {
     }
 
     public String getImageName() {
-        Log.v("formatted name", getItemName().replace(" ", "_").toLowerCase());
         return getItemName().replace(" ", "_").toLowerCase().replace("'", "");
     }
 
