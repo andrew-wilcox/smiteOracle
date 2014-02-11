@@ -6,30 +6,11 @@
     tools:context=".ItemList"
     tools:ignore="MergeRootFrame" >
 
-    <Button
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Session"
-        android:id="@+id/createSession"
-        android:onClick="CreateSession"
-        android:layout_gravity="left|top" />
-
-    <TextView
-        android:layout_width="108dp"
-        android:layout_height="95dp"
-        android:id="@+id/responseView"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="83dp"
-        android:layout_marginLeft="49dp"
-        android:layout_marginRight="46dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Data Used"
-        android:id="@+id/getDataUsed"
-        android:layout_gravity="left|center_vertical"
-        android:onClick="GetDataUsed"
-        android:layout_marginTop="-4dp" />
-
+        android:id="@+id/itemList"
+        android:layout_gravity="center"
+        android:choiceMode="singleChoice"
+        android:clickable="true" />
 </FrameLayout>

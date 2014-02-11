@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.Binder;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -160,9 +161,12 @@ public class SmiteAPIHandler extends IntentService {
     }
 
     public static void publishResults(String method){
-        Log.v("Publishing Method", method);
-        Intent i = new Intent("com.hirez.smiteoracle.ItemList");
-        i.putExtra("methodName", method);
-        getContext().sendBroadcast(i);
+        try{
+            Log.v("Publishing Method", method);
+            Intent i = new Intent("com.hirez.smiteoracle.ItemList");
+            i.putExtra("methodName", method);
+            getContext().sendBroadcast(i);
+        }
+        catch(Exception e){ Log.e("SmiteAPIHandler", "exception", e); }
     }
 }
