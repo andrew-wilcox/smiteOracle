@@ -173,7 +173,11 @@ public class ItemList extends Activity {
 
             for(int i=0;i<arr.length();i++)
             {
-                items.add(new Item(arr.getJSONObject(i)));
+                JSONObject j = arr.getJSONObject(i);
+                if(j.getInt("ItemTier") == 1)
+                {
+                    items.add(new Item(arr.getJSONObject(i)));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
