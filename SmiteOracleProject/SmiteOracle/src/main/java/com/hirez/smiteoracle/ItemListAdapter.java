@@ -11,15 +11,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Andrew on 2/10/14.
  */
 public class ItemListAdapter extends ArrayAdapter<Item> {
     Context context;
     int layoutResourceId;
-    Item items[] = null;
+    ArrayList<Item> items = null;
 
-    public ItemListAdapter(Context context, int layoutResourceId, Item[] items) {
+    public ItemListAdapter(Context context, int layoutResourceId, ArrayList<Item> items) {
         super(context, layoutResourceId, items);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -48,7 +50,7 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
             holder = (ItemHolder)row.getTag();
         }
 
-        Item item = items[position];
+        Item item = items.get(position);
         holder.textTitle.setText(item.getItemName());
         holder.imgIcon.setImageResource(context.getResources().getIdentifier(item.getImageName(), "drawable", "com.hirez.smiteoracle"));
 

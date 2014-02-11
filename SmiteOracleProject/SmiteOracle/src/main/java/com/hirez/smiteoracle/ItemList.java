@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -45,7 +46,7 @@ public class ItemList extends Activity {
 
     static String session_id;
 
-    private Item[] items;
+    private ArrayList<Item> items;
     private ListView itemListView;
 
     final int maxLogSize = 1000;
@@ -168,13 +169,11 @@ public class ItemList extends Activity {
         try {
             JSONArray arr = object.getJSONArray("response");
 
-            items = new Item[arr.length()];
+            items = new ArrayList<Item>();
 
-            Log.v("length", "" + arr.length());
             for(int i=0;i<arr.length();i++)
             {
-                Log.v("Inside for at " + i, arr.getJSONObject(i).toString());
-                items[i] = new Item(arr.getJSONObject(i));
+                items.add(new Item(arr.getJSONObject(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
