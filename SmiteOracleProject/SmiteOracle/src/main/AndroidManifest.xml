@@ -20,12 +20,20 @@
             android:label="@string/title_activity_item_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:enabled="true"
-                 android:name=".SmiteAPIHandler"
-                 android:label="SmiteAPIHandler"/>
+
+        <service
+            android:name="com.hirez.smiteoracle.SmiteAPIHandler"
+            android:enabled="true"
+            android:label="SmiteAPIHandler" />
+
+        <activity
+            android:name=".StarterItemDisplay"
+            android:label="@string/title_activity_starter_item" >
+        </activity>
     </application>
 
 </manifest>

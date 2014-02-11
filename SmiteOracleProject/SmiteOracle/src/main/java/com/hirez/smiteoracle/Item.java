@@ -81,14 +81,23 @@ public class Item {
             description = object.getJSONObject("ItemDescription").getString("Description");
             secondaryDescription = object.getJSONObject("ItemDescription").getString("SecondaryDescription");
 
-            JSONArray statsArray = object.getJSONArray("Menuitems");
-            JSONObject current;
+            Log.v("about to assemble stats", "");
 
-            for(int i=0;i<statsArray.length();i++)
-            {
-                current = statsArray.getJSONObject(i);
-                stats.put(current.getString("Description"), current.getString("Value"));
+
+            try {
+                JSONArray statsArray = object.getJSONObject("ItemDescription").getJSONArray("Menuitems");
+                JSONObject current;
+
+                for(int i=0;i<statsArray.length();i++)
+                {
+                    current = statsArray.getJSONObject(i);
+                    stats.put(current.getString("Description"), current.getString("Value"));
+                    Log.v("assembling stats", current.toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

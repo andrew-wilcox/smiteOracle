@@ -6,41 +6,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 
 public class ItemList extends Activity {
@@ -59,18 +44,29 @@ public class ItemList extends Activity {
     }
 
     @Override
+    protected void onStop(){
+        super.onStop();
+        unregisterReceiver(receiver);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        registerReceiver(receiver, new IntentFilter("com.hirez.smiteoracle.ItemList"));
+        SystemClock.sleep(100);
+        createSession();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(receiver, new IntentFilter("com.hirez.smiteoracle.ItemList"));
 
-        SystemClock.sleep(100);
-        createSession();
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -118,22 +114,6 @@ public class ItemList extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
-
     //*************
     //API FUNCTIONS
     //*************
@@ -165,7 +145,11 @@ public class ItemList extends Activity {
         itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                Toast.makeText(getApplicationContext(), items.get(position).getItemName(), Toast.LENGTH_SHORT).show();
+                if(items.get(position).getStartingItem())
+                {
+                    Intent i = getStarterItemIntent(items.get(position));
+                    startActivity(i);
+                }
             }
         });
 
@@ -272,4 +256,52 @@ public class ItemList extends Activity {
         i.putExtra("data", l);
         this.startService(i);
     }
+
+    public Intent getStarterItemIntent(Item i)
+    {
+        Intent intent = new Intent(this, StarterItemDisplay.class);
+
+        intent.putExtra("itemName", i.getItemName());
+        intent.putExtra("itemDescription", i.getDescription());
+        intent.putExtra("imageName",i.getImageName());
+        intent.putExtra("secondaryDescription", i.getSecondaryDescription());
+
+        Set keys = i.getStats().keySet();
+        int count = 1;
+        for(Iterator iter = keys.iterator(); iter.hasNext();)
+        {
+            String key = (String) iter.next();
+            String value = i.getStats().get(key);
+            intent.putExtra("stat" + count + "Name", key);
+            intent.putExtra("stat" + count + "Desc", value);
+            count++;
+        }
+
+        intent.putExtra("numStats", keys.size());
+
+        return intent;
+    }
+
+    /*public Intent getItemIntent(Item i)
+    {
+        Intent intent = new Intent(this, ItemDisplay.class);
+
+        intent.putExtra("imageName",i.getImageName());
+        intent.putExtra("secondaryDescription", i.getSecondaryDescription());
+
+        Set keys = i.getStats().keySet();
+        int count = 1;
+        for(Iterator iter = keys.iterator(); iter.hasNext();)
+        {
+            String key = (String) iter.next();
+            String value = i.getStats().get(key);
+            intent.putExtra("stat" + count + "Name", key);
+            intent.putExtra("stat" + count + "Desc", value);
+            count++;
+        }
+
+        intent.putExtra("numStats", keys.size());
+
+        return intent;
+    }*/
 }
