@@ -65,6 +65,8 @@ public class Item {
     private String secondaryDescription;
     private Map<String, String> stats = new HashMap<String, String>();
 
+    public Item(){}
+
     public Item(JSONObject object)
     {
         try {
