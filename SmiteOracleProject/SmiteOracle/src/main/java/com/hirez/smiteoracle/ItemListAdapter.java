@@ -30,7 +30,7 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
-        ItemHolder holder =null;
+        ItemHolder holder = null;
 
         if(row == null)
         {
@@ -50,7 +50,7 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
 
         Item item = items[position];
         holder.textTitle.setText(item.getItemName());
-        holder.imgIcon.setImageResource(context.getResources().getIdentifier(item.getItemName(), "drawable", "com.hirez.smiteoracle"));
+        holder.imgIcon.setImageResource(context.getResources().getIdentifier(item.getImageName(), "drawable", "com.hirez.smiteoracle"));
 
         return row;
     }

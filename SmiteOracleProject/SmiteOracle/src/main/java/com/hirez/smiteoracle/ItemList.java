@@ -151,8 +151,8 @@ public class ItemList extends Activity {
         String response = null;
         try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
         try {
-            getItemList(new JSONObject(response));
-        } catch (JSONException e) {
+            getItemList(string2JSON(response));
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -170,8 +170,10 @@ public class ItemList extends Activity {
 
             items = new Item[arr.length()];
 
+            Log.v("length", "" + arr.length());
             for(int i=0;i<arr.length();i++)
             {
+                Log.v("Inside for at " + i, arr.getJSONObject(i).toString());
                 items[i] = new Item(arr.getJSONObject(i));
             }
         } catch (JSONException e) {
