@@ -83,9 +83,6 @@ public class Item {
             description = object.getJSONObject("ItemDescription").getString("Description");
             secondaryDescription = object.getJSONObject("ItemDescription").getString("SecondaryDescription");
 
-            Log.v("about to assemble stats", "");
-
-
             try {
                 JSONArray statsArray = object.getJSONObject("ItemDescription").getJSONArray("Menuitems");
                 JSONObject current;
@@ -94,7 +91,6 @@ public class Item {
                 {
                     current = statsArray.getJSONObject(i);
                     stats.put(current.getString("Description"), current.getString("Value"));
-                    Log.v("assembling stats", current.toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

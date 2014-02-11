@@ -33,6 +33,7 @@ public class ItemList extends Activity {
     static String session_id;
 
     private ArrayList<Item> items;
+    private ArrayList<TieredItem> tieredItems;
     private ListView itemListView;
 
     final int maxLogSize = 1000;
@@ -158,6 +159,7 @@ public class ItemList extends Activity {
 
     public void getItemList(JSONObject object)
     {
+        ArrayList<Item> allItems = null;
         try {
             JSONArray arr = object.getJSONArray("response");
 
@@ -170,11 +172,47 @@ public class ItemList extends Activity {
                 {
                     Log.v("item", j.toString());
                     items.add(new Item(arr.getJSONObject(i)));
+                    allItems.add(new Item(arr.getJSONObject(i)));
                 }
+                else{allItems.add(new Item(arr.getJSONObject(i)));}
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        //tieredItems = setupItemTierList(allItems);
+        Log.v("tiereditems", tieredItems.toString());
+    }
+
+    public ArrayList<TieredItem> setupItemTierList(ArrayList<Item> items)
+    {
+        ArrayList<TieredItem> tieredItems = null;
+        Item tier2 = null, tier3 = null;
+
+        for(int i=0;i<items.size();i++)
+        {
+            Item currentItem = items.get(i);
+            if(currentItem.getItemTier() == 1 && !(currentItem.getType().equals("Starter") || currentItem.getType().equals("Consumable"))){
+                for(int j=0;j<items.size();j++)
+                {
+                    Item subItem = items.get(j);
+                    if(subItem.getItemName().equals(currentItem.getItemName()) && subItem.getItemTier() == 2){
+                        Log.v("Item Name", currentItem.getItemName());
+                        Log.v("Tier", "2");
+                        tier2 = subItem;
+                    }
+                    else if(subItem.getItemName().equals(currentItem.getItemName()) && subItem.getItemTier() == 3){
+                        Log.v("Item Name", currentItem.getItemName());
+                        Log.v("Tier", "3");
+                        tier3 = subItem;
+                    }
+
+                    tieredItems.add(new TieredItem(currentItem, tier2, tier3));
+                }
+            }
+        }
+
+        return tieredItems;
     }
     //****************
     //HELPER FUNCTIONS
