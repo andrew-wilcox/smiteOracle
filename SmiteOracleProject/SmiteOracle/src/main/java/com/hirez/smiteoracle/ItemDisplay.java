@@ -5,7 +5,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,21 +13,16 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Iterator;
-import java.util.Set;
-
-public class StarterItemDisplay extends ActionBarActivity {
+public class ItemDisplay extends ActionBarActivity {
 
     ImageView icon;
     TextView itemName, itemDescription, stat1Name, stat1Desc, stat2Name, stat2Desc, stat3Name, stat3Desc, secondaryDesc;
-    static final String LOG_TAG = "intentLogging";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.starter_item);
+        setContentView(R.layout.tiered_item);
 
         Intent i = this.getIntent();
 
@@ -49,26 +43,21 @@ public class StarterItemDisplay extends ActionBarActivity {
         itemDescription.setText(i.getStringExtra("itemDescription"));
         secondaryDesc.setText(i.getStringExtra("secondaryDescription"));
 
-        stat1Name.setText(i.getStringExtra("tier1stat1Name"));
-        stat2Name.setText(i.getStringExtra("tier1stat2Name"));
-        stat3Name.setText(i.getStringExtra("tier1stat3Name"));
+        stat1Name.setText(i.getStringExtra("stat1Name"));
+        stat2Name.setText(i.getStringExtra("stat2Name"));
+        stat3Name.setText(i.getStringExtra("stat3Name"));
 
-        stat1Desc.setText(i.getStringExtra("tier1stat1Desc"));
-        stat2Desc.setText(i.getStringExtra("tier1stat2Desc"));
-        stat3Desc.setText(i.getStringExtra("tier1stat3Desc"));
+        stat1Desc.setText(i.getStringExtra("stat1Desc"));
+        stat2Desc.setText(i.getStringExtra("stat2Desc"));
+        stat3Desc.setText(i.getStringExtra("stat3Desc"));
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.starter_item, menu);
+        getMenuInflater().inflate(R.menu.tiered_item_display, menu);
         return true;
     }
 
@@ -83,19 +72,4 @@ public class StarterItemDisplay extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*public static void dumpIntent(Intent i){
-
-        Bundle bundle = i.getExtras();
-        if (bundle != null) {
-            Set<String> keys = bundle.keySet();
-            Iterator<String> it = keys.iterator();
-            Log.e(LOG_TAG,"Dumping Intent start");
-            while (it.hasNext()) {
-                String key = it.next();
-                Log.e(LOG_TAG,"[" + key + "=" + bundle.get(key)+"]");
-            }
-            Log.e(LOG_TAG,"Dumping Intent end");
-        }
-    }*/
 }

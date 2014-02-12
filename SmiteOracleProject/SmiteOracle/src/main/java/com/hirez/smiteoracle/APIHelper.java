@@ -57,7 +57,6 @@ public class APIHelper {
         final String method = "createsession";
 
         String url = apiUrl + method + responseType + '/' + devID + '/' + getSignature(method, timestamp) + '/' + timestamp;
-        Log.v("url", url);
 
         return new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -71,7 +70,6 @@ public class APIHelper {
             public void onErrorResponse(VolleyError volleyError) {
                 new File(SmiteAPIHandler.getContext().getCacheDir(), method);
                 SmiteAPIHandler.publishResults(method);
-                Log.v("error", volleyError.toString());
             }
         });
     }

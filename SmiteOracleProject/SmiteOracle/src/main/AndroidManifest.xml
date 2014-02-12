@@ -31,8 +31,12 @@
             android:label="SmiteAPIHandler" />
 
         <activity
-            android:name=".StarterItemDisplay"
+            android:name="com.hirez.smiteoracle.StarterItemDisplay"
             android:label="@string/title_activity_starter_item" >
+        </activity>
+        <activity
+            android:name=".ItemDisplay"
+            android:label="@string/title_activity_tiered_item_display" >
         </activity>
     </application>
 

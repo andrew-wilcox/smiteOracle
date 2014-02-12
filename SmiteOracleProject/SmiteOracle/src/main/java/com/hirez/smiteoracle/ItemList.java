@@ -33,7 +33,6 @@ public class ItemList extends Activity {
     static String session_id;
 
     private ArrayList<Item> items;
-    private ArrayList<TieredItem> tieredItems;
     private ListView itemListView;
 
     final int maxLogSize = 1000;
@@ -168,52 +167,14 @@ public class ItemList extends Activity {
             for(int i=0;i<arr.length();i++)
             {
                 JSONObject j = arr.getJSONObject(i);
-                if(j.getInt("ItemTier") == 1 && !j.getString("Type").equals("Consumable") && !j.getString("Type").equals("Active"))
-                {
-                    Log.v("item", j.toString());
-                    items.add(new Item(arr.getJSONObject(i)));
-                    allItems.add(new Item(arr.getJSONObject(i)));
-                }
-                else{allItems.add(new Item(arr.getJSONObject(i)));}
+                Log.v("item", j.toString());
+                items.add(new Item(arr.getJSONObject(i)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        //tieredItems = setupItemTierList(allItems);
-        Log.v("tiereditems", tieredItems.toString());
     }
 
-    public ArrayList<TieredItem> setupItemTierList(ArrayList<Item> items)
-    {
-        ArrayList<TieredItem> tieredItems = null;
-        Item tier2 = null, tier3 = null;
-
-        for(int i=0;i<items.size();i++)
-        {
-            Item currentItem = items.get(i);
-            if(currentItem.getItemTier() == 1 && !(currentItem.getType().equals("Starter") || currentItem.getType().equals("Consumable"))){
-                for(int j=0;j<items.size();j++)
-                {
-                    Item subItem = items.get(j);
-                    if(subItem.getItemName().equals(currentItem.getItemName()) && subItem.getItemTier() == 2){
-                        Log.v("Item Name", currentItem.getItemName());
-                        Log.v("Tier", "2");
-                        tier2 = subItem;
-                    }
-                    else if(subItem.getItemName().equals(currentItem.getItemName()) && subItem.getItemTier() == 3){
-                        Log.v("Item Name", currentItem.getItemName());
-                        Log.v("Tier", "3");
-                        tier3 = subItem;
-                    }
-
-                    tieredItems.add(new TieredItem(currentItem, tier2, tier3));
-                }
-            }
-        }
-
-        return tieredItems;
-    }
     //****************
     //HELPER FUNCTIONS
     //****************
@@ -302,16 +263,16 @@ public class ItemList extends Activity {
         intent.putExtra("itemName", i.getItemName());
         intent.putExtra("itemDescription", i.getDescription());
         intent.putExtra("imageName",i.getImageName());
-        intent.putExtra("secondaryDescription", i.getSecondaryDescription());
+        intent.putExtra("secondaryDescription", i.getTier1SecondaryDescription());
 
-        Set keys = i.getStats().keySet();
+        Set keys = i.getTier1stats().keySet();
         int count = 1;
         for(Iterator iter = keys.iterator(); iter.hasNext();)
         {
             String key = (String) iter.next();
-            String value = i.getStats().get(key);
-            intent.putExtra("stat" + count + "Name", key);
-            intent.putExtra("stat" + count + "Desc", value);
+            String value = i.getTier1stats().get(key);
+            intent.putExtra("tier1stat" + count + "Name", key);
+            intent.putExtra("tier1stat" + count + "Desc", value);
             count++;
         }
 
@@ -324,7 +285,7 @@ public class ItemList extends Activity {
     {
         Intent intent = new Intent(this, ItemDisplay.class);
 
-        intent.putExtra("imageName",i.getImageName());
+        intent.putExtra("imageName", i.getImageName());
         intent.putExtra("secondaryDescription", i.getSecondaryDescription());
 
         Set keys = i.getStats().keySet();
@@ -337,8 +298,6 @@ public class ItemList extends Activity {
             intent.putExtra("stat" + count + "Desc", value);
             count++;
         }
-
-        intent.putExtra("numStats", keys.size());
 
         return intent;
     }*/
