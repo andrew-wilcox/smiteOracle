@@ -140,22 +140,28 @@ public class ItemList extends Activity {
             e.printStackTrace();
         }
 
-        ItemListAdapter adapter = new ItemListAdapter(this, R.layout.item_row, allItems);
-
         itemListView = (ListView)findViewById(R.id.itemList);
-        itemListView.setAdapter(adapter);
-        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                if(allItems.get(position).getStartingItem())
-                {
-                    Intent i = getStarterItemIntent(allItems.get(position));
-                    startActivity(i);
+        //This is huge: stops making it request every time it comes into focus
+        //AND preserves scroll location if you open a view and then come back here
+        if(itemListView.getAdapter() == null)
+        {
+            ItemListAdapter adapter = new ItemListAdapter(this, R.layout.item_row, allItems);
+
+            itemListView.setAdapter(adapter);
+            itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                    if(allItems.get(position).getStartingItem())
+                    {
+                        Intent i = getStarterItemIntent(allItems.get(position));
+                        startActivity(i);
+                    }
                 }
-            }
-        });
+            });
 
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public void getItemList(JSONObject object)
