@@ -24,7 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -32,7 +34,7 @@ public class ItemList extends Activity {
 
     static String session_id;
 
-    private ArrayList<Item> items;
+    ArrayList<Item> allItems;
     private ListView itemListView;
 
     final int maxLogSize = 1000;
@@ -138,16 +140,16 @@ public class ItemList extends Activity {
             e.printStackTrace();
         }
 
-        ItemListAdapter adapter = new ItemListAdapter(this, R.layout.item_row, items);
+        ItemListAdapter adapter = new ItemListAdapter(this, R.layout.item_row, allItems);
 
         itemListView = (ListView)findViewById(R.id.itemList);
         itemListView.setAdapter(adapter);
         itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                if(items.get(position).getStartingItem())
+                if(allItems.get(position).getStartingItem())
                 {
-                    Intent i = getStarterItemIntent(items.get(position));
+                    Intent i = getStarterItemIntent(allItems.get(position));
                     startActivity(i);
                 }
             }
@@ -158,17 +160,39 @@ public class ItemList extends Activity {
 
     public void getItemList(JSONObject object)
     {
-        ArrayList<Item> allItems = null;
         try {
             JSONArray arr = object.getJSONArray("response");
 
-            items = new ArrayList<Item>();
+            allItems = new ArrayList<Item>();
+            JSONObject tier2 = null;
+            JSONObject tier3 = null;
 
             for(int i=0;i<arr.length();i++)
             {
-                JSONObject j = arr.getJSONObject(i);
-                Log.v("item", j.toString());
-                items.add(new Item(arr.getJSONObject(i)));
+                JSONObject currentItem = arr.getJSONObject(i);
+                if(currentItem.getInt("ItemTier") == 1)
+                {
+                    for(int j=0;j<arr.length();j++)
+                    {
+                        JSONObject compareItem = arr.getJSONObject(j);
+                        if(!compareItem.getString("Type").equals("Item"))
+                        {
+                            continue;
+                        }
+                        if(compareItem.getString("DeviceName").equals(currentItem.getString("DeviceName")) &&
+                           compareItem.getInt("ItemTier") == 2)
+                        {
+                            tier2 = compareItem;
+                        }
+                        if(compareItem.getString("DeviceName").equals(currentItem.getString("DeviceName")) &&
+                                compareItem.getInt("ItemTier") == 3)
+                        {
+                            tier3 = compareItem;
+                        }
+                    }
+
+                    allItems.add(new Item(currentItem, tier2, tier3));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -286,7 +310,8 @@ public class ItemList extends Activity {
         Intent intent = new Intent(this, ItemDisplay.class);
 
         intent.putExtra("imageName", i.getImageName());
-        intent.putExtra("secondaryDescription", i.getSecondaryDescription());
+        intent.putExtra("tier1SecondaryDescription", i.getTier1SecondaryDescription());
+        intent.putExtra("tier3SecondaryDescription", i.getTier3SecondaryDescription());
 
         Set keys = i.getStats().keySet();
         int count = 1;
