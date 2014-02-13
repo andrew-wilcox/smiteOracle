@@ -175,6 +175,8 @@ public class ItemList extends Activity {
 
             for(int i=0;i<arr.length();i++)
             {
+                tier2 = null;
+                tier3 = null;
                 JSONObject currentItem = arr.getJSONObject(i);
                 if(currentItem.getInt("ItemTier") == 1)
                 {
@@ -196,7 +198,6 @@ public class ItemList extends Activity {
                             tier3 = compareItem;
                         }
                     }
-
                     allItems.add(new Item(currentItem, tier2, tier3));
                 }
             }

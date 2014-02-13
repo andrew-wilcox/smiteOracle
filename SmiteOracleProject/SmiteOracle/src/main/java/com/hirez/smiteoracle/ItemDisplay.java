@@ -5,14 +5,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ItemDisplay extends ActionBarActivity {
 
@@ -43,13 +48,11 @@ public class ItemDisplay extends ActionBarActivity {
         itemDescription.setText(i.getStringExtra("itemDescription"));
         secondaryDesc.setText(i.getStringExtra("secondaryDescription"));
 
-        stat1Name.setText(i.getStringExtra("stat1Name"));
-        stat2Name.setText(i.getStringExtra("stat2Name"));
-        stat3Name.setText(i.getStringExtra("stat3Name"));
+        ArrayList<String> stats = new ArrayList<String>();
+        stats.add(i.getStringExtra("stat1Name") + ' ' + i.getStringExtra("stat1Name"));
+        stats.add(i.getStringExtra("stat2Name") + ' ' + i.getStringExtra("stat2Name"));
+        stats.add(i.getStringExtra("stat3Name") + ' ' + i.getStringExtra("stat3Name"));
 
-        stat1Desc.setText(i.getStringExtra("stat1Desc"));
-        stat2Desc.setText(i.getStringExtra("stat2Desc"));
-        stat3Desc.setText(i.getStringExtra("stat3Desc"));
     }
 
 

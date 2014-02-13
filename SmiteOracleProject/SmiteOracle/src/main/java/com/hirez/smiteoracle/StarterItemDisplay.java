@@ -12,10 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -49,13 +53,26 @@ public class StarterItemDisplay extends ActionBarActivity {
         itemDescription.setText(i.getStringExtra("itemDescription"));
         secondaryDesc.setText(i.getStringExtra("secondaryDescription"));
 
-        stat1Name.setText(i.getStringExtra("tier1stat1Name"));
-        stat2Name.setText(i.getStringExtra("tier1stat2Name"));
-        stat3Name.setText(i.getStringExtra("tier1stat3Name"));
+        ArrayList<String> stats = new ArrayList<String>();
+        stats.add(i.getStringExtra("tier1stat1Name") + ' ' + i.getStringExtra("tier1stat1Desc"));
+        if(i.getStringExtra("tier1stat2Name") != null)
+        {
+            stats.add(i.getStringExtra("tier1stat2Name") + ' ' + i.getStringExtra("tier1stat2Desc"));
+        }
+        if(i.getStringExtra("tier1stat3Name") != null)
+        {
+            stats.add(i.getStringExtra("tier1stat3Name") + ' ' + i.getStringExtra("tier1stat3Desc"));
+        }
 
-        stat1Desc.setText(i.getStringExtra("tier1stat1Desc"));
-        stat2Desc.setText(i.getStringExtra("tier1stat2Desc"));
-        stat3Desc.setText(i.getStringExtra("tier1stat3Desc"));
+        for(int count=0;count<stats.size();count++)
+        {
+            View viewToLoad = LayoutInflater.from(
+                    getApplicationContext()).inflate(
+                    R.layout.stat, null);
+
+            ((TextView) viewToLoad).setText(stats.get(count));
+            ((LinearLayout) findViewById(R.id.statsList)).addView(viewToLoad);
+        }
     }
 
     @Override

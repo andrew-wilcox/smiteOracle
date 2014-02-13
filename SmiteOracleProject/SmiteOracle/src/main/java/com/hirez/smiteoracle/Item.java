@@ -89,8 +89,41 @@ public class Item {
             //had different descriptions, it seemed to make sense to just go ahead and future-
             //proof this for items with a different tier 2 passive
             tier1SecondaryDescription = tier1.getJSONObject("ItemDescription").getString("SecondaryDescription");
-            tier2SecondaryDescription = tier2.getJSONObject("ItemDescription").getString("SecondaryDescription");
-            tier3SecondaryDescription = tier3.getJSONObject("ItemDescription").getString("SecondaryDescription");
+            if(tier2 != null)
+            {
+                tier2SecondaryDescription = tier2.getJSONObject("ItemDescription").getString("SecondaryDescription");
+                //Get the stats of the item from tier2
+                try {
+                    JSONArray statsArray = tier2.getJSONObject("ItemDescription").getJSONArray("Menuitems");
+                    JSONObject current;
+
+                    for(int i=0;i<statsArray.length();i++)
+                    {
+                        current = statsArray.getJSONObject(i);
+                        tier2stats.put(current.getString("Description"), current.getString("Value"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(tier3 != null)
+            {
+                tier3SecondaryDescription = tier3.getJSONObject("ItemDescription").getString("SecondaryDescription");
+
+                //Get the stats of the item from tier3
+                try {
+                    JSONArray statsArray = tier3.getJSONObject("ItemDescription").getJSONArray("Menuitems");
+                    JSONObject current;
+
+                    for(int i=0;i<statsArray.length();i++)
+                    {
+                        current = statsArray.getJSONObject(i);
+                        tier3stats.put(current.getString("Description"), current.getString("Value"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
             //Get the stats of the item from tier1
             try {
@@ -101,34 +134,6 @@ public class Item {
                 {
                     current = statsArray.getJSONObject(i);
                     tier1stats.put(current.getString("Description"), current.getString("Value"));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            //Get the stats of the item from tier2
-            try {
-                JSONArray statsArray = tier2.getJSONObject("ItemDescription").getJSONArray("Menuitems");
-                JSONObject current;
-
-                for(int i=0;i<statsArray.length();i++)
-                {
-                    current = statsArray.getJSONObject(i);
-                    tier2stats.put(current.getString("Description"), current.getString("Value"));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            //Get the stats of the item from tier3
-            try {
-                JSONArray statsArray = tier3.getJSONObject("ItemDescription").getJSONArray("Menuitems");
-                JSONObject current;
-
-                for(int i=0;i<statsArray.length();i++)
-                {
-                    current = statsArray.getJSONObject(i);
-                    tier3stats.put(current.getString("Description"), current.getString("Value"));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -1,163 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bg">
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/itemIcon"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Item Name"
-        android:id="@+id/itemName"
-        android:layout_alignBottom="@+id/itemIcon"
-        android:layout_toRightOf="@+id/itemIcon"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:textColor="#FFFFFF" />
-
-    <ImageView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="#FFFFFF"
-        android:layout_alignBottom="@+id/itemIcon"
-        android:layout_alignParentLeft="true"
-        android:id="@+id/rule" />
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/bg"
+        android:focusable="false">
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="#FFFFFF"
-        android:layout_alignBottom="@+id/description"
-        android:layout_alignParentLeft="true"
-        android:id="@+id/rule2" />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/itemIcon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/dashed_rule"
-        android:layout_alignBottom="@+id/stat3Desc"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Item Name"
+            android:id="@+id/itemName"
+            android:layout_alignBottom="@+id/itemIcon"
+            android:layout_toRightOf="@+id/itemIcon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textColor="#FFFFFF" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/description"
-        android:layout_below="@+id/rule"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:textColor="#FFFFFF"
-        android:textIsSelectable="true"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Item Description"
-        android:textSize="30dp" />
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#FFFFFF"
+            android:layout_alignBottom="@+id/itemIcon"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/rule" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/stat3Desc"
-        android:textColor="#FFFFFF"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Stat 3 Description"
-        android:paddingLeft="10dp"
-        android:textSize="22dp"
-        android:layout_alignBottom="@+id/stat3Name"
-        android:layout_toRightOf="@+id/stat3Name" />
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#FFFFFF"
+            android:layout_alignBottom="@+id/description"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/rule2" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/stat2Desc"
-        android:textColor="#FFFFFF"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Stat 2 Description"
-        android:paddingLeft="10dp"
-        android:textSize="22dp"
-        android:layout_alignBottom="@+id/stat2Name"
-        android:layout_toRightOf="@+id/stat2Name"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dashed_rule" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/stat1Desc"
-        android:textColor="#FFFFFF"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Stat 1 Description"
-        android:paddingLeft="10dp"
-        android:textSize="22dp"
-        android:layout_alignBottom="@+id/stat1Name"
-        android:layout_toRightOf="@+id/stat1Name" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/description"
+            android:layout_below="@+id/rule"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="true"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Item Description"
+            android:textSize="30dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/stat1Name"
-        android:layout_below="@+id/description"
-        android:layout_alignParentLeft="true"
-        android:textColor="#FFFFFF"
-        android:textIsSelectable="true"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Stat 1 Name"
-        android:textSize="26dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/secondaryDescription"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false"
+            android:textSize="26dp"
+            android:layout_below="@+id/statsList"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/stat2Name"
-        android:layout_below="@+id/stat1Name"
-        android:layout_alignParentLeft="false"
-        android:textColor="#FFFFFF"
-        android:textIsSelectable="true"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Stat 2 Name"
-        android:textSize="26dp"
-        android:layout_alignParentBottom="false" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/rule2"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/rule2"
+            android:id="@+id/statsList"></LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/stat3Name"
-        android:layout_below="@+id/stat2Name"
-        android:layout_alignParentLeft="true"
-        android:textColor="#FFFFFF"
-        android:textIsSelectable="true"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Stat 3 Name"
-        android:textSize="26dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/secondaryDescription"
-        android:layout_below="@+id/stat3Desc"
-        android:layout_alignParentLeft="true"
-        android:textColor="#FFFFFF"
-        android:textIsSelectable="false"
-        android:textSize="26dp" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
