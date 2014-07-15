@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import java.util.Set;
 public class StarterItemDisplay extends ActionBarActivity {
 
     ImageView icon;
-    TextView itemName, itemDescription, stat1Name, stat1Desc, stat2Name, stat2Desc, stat3Name, stat3Desc, secondaryDesc;
+    TextView itemName, itemDescription, secondaryDesc;
     static final String LOG_TAG = "intentLogging";
 
     @Override
@@ -39,12 +40,6 @@ public class StarterItemDisplay extends ActionBarActivity {
         icon = (ImageView) findViewById(R.id.itemIcon);
         itemName = (TextView) findViewById(R.id.itemName);
         itemDescription = (TextView) findViewById(R.id.description);
-        stat1Name = (TextView) findViewById(R.id.stat1Name);
-        stat2Name = (TextView) findViewById(R.id.stat2Name);
-        stat3Name = (TextView) findViewById(R.id.stat3Name);
-        stat1Desc = (TextView) findViewById(R.id.stat1Desc);
-        stat2Desc = (TextView) findViewById(R.id.stat2Desc);
-        stat3Desc = (TextView) findViewById(R.id.stat3Desc);
         secondaryDesc = (TextView) findViewById(R.id.secondaryDescription);
 
         icon.setImageResource(this.getResources().getIdentifier(i.getStringExtra("imageName"), "drawable", "com.hirez.smiteoracle"));
@@ -54,24 +49,35 @@ public class StarterItemDisplay extends ActionBarActivity {
         secondaryDesc.setText(i.getStringExtra("secondaryDescription"));
 
         ArrayList<String> stats = new ArrayList<String>();
-        stats.add(i.getStringExtra("tier1stat1Name") + ' ' + i.getStringExtra("tier1stat1Desc"));
-        if(i.getStringExtra("tier1stat2Name") != null)
+        int statCount = 1;
+        while(i.getStringExtra("tier1stat" + statCount + "Name") != null)
         {
-            stats.add(i.getStringExtra("tier1stat2Name") + ' ' + i.getStringExtra("tier1stat2Desc"));
+            stats.add(i.getStringExtra("tier1stat" + statCount + "Name") + ' ' + i.getStringExtra("tier1stat" + statCount + "Desc"));
+            statCount++;
         }
-        if(i.getStringExtra("tier1stat3Name") != null)
-        {
-            stats.add(i.getStringExtra("tier1stat3Name") + ' ' + i.getStringExtra("tier1stat3Desc"));
-        }
+
+        RelativeLayout parent = (RelativeLayout) findViewById(R.id.parentStarter);
+        LayoutInflater Li = LayoutInflater.from(getApplicationContext());
 
         for(int count=0;count<stats.size();count++)
         {
-            View viewToLoad = LayoutInflater.from(
-                    getApplicationContext()).inflate(
-                    R.layout.stat, null);
+            LinearLayout ll = (LinearLayout) Li.inflate(R.layout.stat, null);
+            TextView tv = (TextView) ll.findViewById(R.id.stat);
+            tv.setText(stats.get(count));
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            ll.setId(count+1);
 
-            ((TextView) viewToLoad).setText(stats.get(count));
-            ((LinearLayout) findViewById(R.id.statsList)).addView(viewToLoad);
+            if (count == 0)
+            {
+                p.addRule(RelativeLayout.BELOW, R.id.secondaryDescription);
+            }
+            else
+            {
+                p.addRule(RelativeLayout.BELOW, getResources().getIdentifier(String.valueOf(count), "id", this.getPackageName()));
+            }
+
+            parent.addView(ll, p);
         }
     }
 
@@ -100,19 +106,4 @@ public class StarterItemDisplay extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*public static void dumpIntent(Intent i){
-
-        Bundle bundle = i.getExtras();
-        if (bundle != null) {
-            Set<String> keys = bundle.keySet();
-            Iterator<String> it = keys.iterator();
-            Log.e(LOG_TAG,"Dumping Intent start");
-            while (it.hasNext()) {
-                String key = it.next();
-                Log.e(LOG_TAG,"[" + key + "=" + bundle.get(key)+"]");
-            }
-            Log.e(LOG_TAG,"Dumping Intent end");
-        }
-    }*/
 }

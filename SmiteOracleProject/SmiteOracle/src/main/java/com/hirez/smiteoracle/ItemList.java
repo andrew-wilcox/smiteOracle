@@ -35,7 +35,6 @@ public class ItemList extends Activity {
     static String session_id;
 
     ArrayList<Item> allItems;
-    private ListView itemListView;
 
     final int maxLogSize = 1000;
 
@@ -132,6 +131,7 @@ public class ItemList extends Activity {
 
     public void handlegetitems(String methodName)
     {
+        ListView itemListView;
         String response = null;
         try{response = readFromFile(methodName);}catch(Exception e){Log.e("SmiteAPIHandler", "exception", e);}
         try {

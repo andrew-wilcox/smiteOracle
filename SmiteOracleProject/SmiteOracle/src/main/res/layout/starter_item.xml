@@ -6,31 +6,34 @@
     android:layout_height="wrap_content"
     android:fillViewport="true">
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@drawable/bg"
-        android:focusable="false">
+        android:focusable="false"
+        android:id="@+id/parentStarter">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/itemIcon"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Item Name"
             android:id="@+id/itemName"
-            android:layout_alignBottom="@+id/itemIcon"
-            android:layout_toRightOf="@+id/itemIcon"
-            android:layout_alignParentTop="true"
+            android:textColor="#FFFFFF"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_above="@+id/rule"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:textColor="#FFFFFF" />
+            android:layout_toRightOf="@+id/itemIcon"
+            android:textSize="32dp"
+            android:paddingBottom="32dp" />
 
         <ImageView
             android:layout_width="fill_parent"
@@ -48,11 +51,6 @@
             android:layout_alignParentLeft="true"
             android:id="@+id/rule2" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/dashed_rule" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +64,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="Item Description"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,18 +74,17 @@
             android:id="@+id/secondaryDescription"
             android:textColor="#FFFFFF"
             android:textIsSelectable="false"
-            android:textSize="26dp"
-            android:layout_below="@+id/statsList"
+            android:textSize="23dp"
+            android:layout_below="@+id/rule2"
             android:layout_centerHorizontal="true" />
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/rule2"
-            android:layout_centerHorizontal="true"
-            android:layout_alignBottom="@+id/rule2"
-            android:id="@+id/statsList"></LinearLayout>
+            android:layout_height="2dp"
+            android:background="#FFFFFF"
+            android:layout_alignBottom="@+id/secondaryDescription"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/rule3" />
 
     </RelativeLayout>
 </ScrollView>
